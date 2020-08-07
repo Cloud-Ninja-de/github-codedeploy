@@ -1,0 +1,23 @@
+version: 0.0
+os: linux
+
+files:
+  - source: Files/
+    destination: /var/www/html
+  
+permissions:
+  - object: /var/www/html
+    pattern: index.html
+    owner: apache
+    group: apache
+    mode: 644
+    type:
+      - file
+    
+hooks:
+  BeforeInstall:
+    - location: Scripts/webserver-stop.sh
+    - location: Scripts/delete-old-index.sh
+  AfterInstall:
+    - location: Scripts/sleep.sh
+    - location: Scripts/webserver-start.sh
